@@ -8,7 +8,7 @@ channel.queue_declare(queue='hello')
 
 channel.basic_publish(exchange='',
                       routing_key='hello',
-                      body='Hello World!')
+                      body='{"type" : "ns", "id" : "ns-001"}')
 print("[x] Sent 'Hello World!'")
 
 connection.close()

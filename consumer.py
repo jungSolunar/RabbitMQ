@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import pika
+import json
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('10.211.55.3'))
 channel = connection.channel()
@@ -7,7 +8,10 @@ channel = connection.channel()
 channel.queue_declare(queue='hello')
 
 def callback(ch, method, properties, body):
-    print(" [x] Received %r" % body)
+    dict = json.loads(body)
+    print dict.get('type', None)
+
+    #print(" [x] Received %r" % body)
 
 
 channel.basic_consume(callback,
@@ -16,4 +20,5 @@ channel.basic_consume(callback,
 
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
+
 
